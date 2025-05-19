@@ -1,0 +1,38 @@
+Connect-MgGraph -Scopes "Community.ReadWrite.All" -NoWelcome
+
+$Uri = "https://graph.microsoft.com/v1.0/employeeExperience/communities"
+
+$Communities = @(
+    @{
+        displayName = “Community Name˜
+        description = "A community to share and learn about best practices in using Viva Engage."
+        privacy = "Public"
+        "owners@odata.bind" = @(
+            "https://graph.microsoft.com/v1.0/users/ #ID”  # Substitua pelo ID correto
+
+        )
+    },
+    @{
+        displayName = “Community Name˜
+        description = "A community to share and learn about best practices in using Viva Engage."
+        privacy = "Public"
+        "owners@odata.bind" = @(
+            "https://graph.microsoft.com/v1.0/users/ #ID”  # Substitua pelo ID correto
+        )
+    },
+    @{
+        displayName = “Community Name˜
+        description = "A community to share and learn about best practices in using Viva Engage."
+        privacy = "Public"
+        "owners@odata.bind" = @(
+            "https://graph.microsoft.com/v1.0/users/ #ID”  # Substitua pelo ID correto
+        )
+    }
+)
+
+foreach ($Community in $Communities) {
+    $VivaCommunityBody = $Community | ConvertTo-Json
+    Invoke-MgGraphRequest -Uri $Uri -Method POST -Body $VivaCommunityBody -StatusCodeVariable "Status"
+    Write-Host "Created community: $($Community.displayName) with status code: $Status"
+}
+
